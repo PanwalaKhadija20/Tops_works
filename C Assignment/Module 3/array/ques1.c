@@ -1,8 +1,4 @@
-//
-#include<stdio.h>
-int main()
-{
-    //Write a program to find out the max number from given array using function
+//Write a program to find out the max number from given array using function
 #include<stdio.h>
 int findmax(int arr[], int n)
 {
@@ -31,7 +27,4 @@ for(i=0; i<n; i++)
   max= findmax(arr, n);
 printf("maximum number is :%d\n", max);
 
-}
-
-    
 }
