@@ -1,0 +1,462 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.39 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| demo_sql           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| practical          |
+| practical1         |
+| practical2         |
+| sys                |
++--------------------+
+8 rows in set (0.09 sec)
+
+mysql> create database khadi;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use khadi;
+Database changed
+mysql> show tables;
+Empty set (0.02 sec)
+
+mysql> create table Customer(id int primary key,name varchar(20),Mobile_No bigint unique,age int check(age>10),city varchar(30));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_khadi |
++-----------------+
+| customer        |
++-----------------+
+1 row in set (0.01 sec)
+
+mysql> describe customer;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | int         | NO   | PRI | NULL    |       |
+| name      | varchar(20) | YES  |     | NULL    |       |
+| Mobile_No | bigint      | YES  | UNI | NULL    |       |
+| age       | int         | YES  |     | NULL    |       |
+| city      | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into customer values(1,"Khadi",9106639533,18,"Surat"),(2,"AK",9099740533,18,"Surat"),(3,"Misbah",9898357982,32,"Surat"),(4,"Zaffar",97202345676,40,"Surat"),(5,"Sofia",9898765234,31,"Surat");
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from customer;
++----+--------+-------------+------+-------+
+| id | name   | Mobile_No   | age  | city  |
++----+--------+-------------+------+-------+
+|  1 | Khadi  |  9106639533 |   18 | Surat |
+|  2 | AK     |  9099740533 |   18 | Surat |
+|  3 | Misbah |  9898357982 |   32 | Surat |
+|  4 | Zaffar | 97202345676 |   40 | Surat |
+|  5 | Sofia  |  9898765234 |   31 | Surat |
++----+--------+-------------+------+-------+
+5 rows in set (0.01 sec)
+
+mysql>update customer set age=35 where id=3;
+mysql>delete from customer where id=4;
+
+mysql> select *from customer;
++----+--------+------------+------+-------+
+| id | name   | Mobile_No  | age  | city  |
++----+--------+------------+------+-------+
+|  1 | Khadi  | 9106639533 |   18 | Surat |
+|  2 | AK     | 9099740533 |   18 | Surat |
+|  3 | Misbah | 9898357982 |   35 | Surat |
+|  5 | Sofia  | 9898765234 |   31 | Surat |
++----+--------+------------+------+-------+
+4 rows in set (0.00 sec)
+mysql>create table Payment(PayId int primary key,id int foreign key(id) references customer(id),Amount int not null,Mode varchar(20),,Pay_Date date);
+
+mysql> describe payment;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PayId    | int         | NO   | PRI | NULL    |       |
+| id       | int         | YES  | MUL | NULL    |       |
+| Amount   | int         | NO   |     | NULL    |       |
+| Mode     | varchar(20) | YES  |     | NULL    |       |
+| Pay_Date | date        | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into payment values (121,1,999,"Online","2024-10-25"),(122,2,1599,"Cash","2024-10-7"),(123,3,1999,"Online","2024-10-18"),(124,5,599,"Cash","2024-10-20");
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from payment;
++-------+------+--------+--------+------------+
+| PayId | id   | Amount | Mode   | Pay_Date   |
++-------+------+--------+--------+------------+
+|   121 |    1 |    999 | Online | 2024-10-25 |
+|   122 |    2 |   1599 | Cash   | 2024-10-07 |
+|   123 |    3 |   1999 | Online | 2024-10-18 |
+|   124 |    5 |    599 | Cash   | 2024-10-20 |
++-------+------+--------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> update payment set amount=1499 where payid=122;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from payment;
++-------+------+--------+--------+------------+
+| PayId | id   | Amount | Mode   | Pay_Date   |
++-------+------+--------+--------+------------+
+|   121 |    1 |    999 | Online | 2024-10-25 |
+|   122 |    2 |   1499 | Cash   | 2024-10-07 |
+|   123 |    3 |   1999 | Online | 2024-10-18 |
+|   124 |    5 |    599 | Cash   | 2024-10-20 |
++-------+------+--------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table Payment add column Remarks varchar(20);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from payment;
++-------+------+--------+--------+------------+---------+
+| PayId | id   | Amount | Mode   | Pay_Date   | Remarks |
++-------+------+--------+--------+------------+---------+
+|   121 |    1 |    999 | Online | 2024-10-25 | NULL    |
+|   122 |    2 |   1499 | Cash   | 2024-10-07 | NULL    |
+|   123 |    3 |   1999 | Online | 2024-10-18 | NULL    |
+|   124 |    5 |    599 | Cash   | 2024-10-20 | NULL    |
++-------+------+--------+--------+------------+---------+
+4 rows in set (0.00 sec)
+mysql> alter table Payment Rename column Remarks to Remark;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from Payment;
++-------+------+--------+--------+------------+--------+
+| PayId | id   | Amount | Mode   | Pay_Date   | Remark |
++-------+------+--------+--------+------------+--------+
+|   121 |    1 |    999 | Online | 2024-10-25 | NULL   |
+|   122 |    2 |   1499 | Cash   | 2024-10-07 | NULL   |
+|   123 |    3 |   1999 | Online | 2024-10-18 | NULL   |
+|   124 |    5 |    599 | Cash   | 2024-10-20 | NULL   |
++-------+------+--------+--------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> alter table Payment Rename column Remark to Remarks;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from payment;
++-------+------+--------+--------+------------+---------+
+| PayId | id   | Amount | Mode   | Pay_Date   | Remarks |
++-------+------+--------+--------+------------+---------+
+|   121 |    1 |    999 | Online | 2024-10-25 | NULL    |
+|   122 |    2 |   1499 | Cash   | 2024-10-07 | NULL    |
+|   123 |    3 |   1999 | Online | 2024-10-18 | NULL    |
+|   124 |    5 |    599 | Cash   | 2024-10-20 | NULL    |
++-------+------+--------+--------+------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> alter table Payment drop column Remarks;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from Payment;
++-------+------+--------+--------+------------+
+| PayId | id   | Amount | Mode   | Pay_Date   |
++-------+------+--------+--------+------------+
+|   121 |    1 |    999 | Online | 2024-10-25 |
+|   122 |    2 |   1499 | Cash   | 2024-10-07 |
+|   123 |    3 |   1999 | Online | 2024-10-18 |
+|   124 |    5 |    599 | Cash   | 2024-10-20 |
++-------+------+--------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> describe payment;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PayId    | int         | NO   | PRI | NULL    |       |
+| id       | int         | YES  | MUL | NULL    |       |
+| Amount   | int         | NO   |     | NULL    |       |
+| Mode     | varchar(20) | YES  |     | NULL    |       |
+| Pay_Date | date        | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql> select *from payment where mode="cash";
++-------+------+--------+------+------------+
+| PayId | id   | Amount | Mode | Pay_Date   |
++-------+------+--------+------+------------+
+|   122 |    2 |   1499 | Cash | 2024-10-07 |
+|   124 |    5 |    599 | Cash | 2024-10-20 |
++-------+------+--------+------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select name,age from customer where age>=18;
++--------+------+
+| name   | age  |
++--------+------+
+| Khadi  |   18 |
+| AK     |   18 |
+| Misbah |   35 |
+| Sofia  |   31 |
++--------+------+
+4 rows in set (0.00 sec)
+
+mysql> select name,age from customer where age=18;
++-------+------+
+| name  | age  |
++-------+------+
+| Khadi |   18 |
+| AK    |   18 |
++-------+------+
+2 rows in set (0.00 sec)
+
+mysql> select name,age,mobile_no from customer where age between 18 and 32;
++-------+------+------------+
+| name  | age  | mobile_no  |
++-------+------+------------+
+| Khadi |   18 | 9106639533 |
+| AK    |   18 | 9099740533 |
+| Sofia |   31 | 9898765234 |
++-------+------+------------+
+3 rows in set (0.01 sec)
+
+mysql> select name,age,mobile_no from customer where age not between 18 and 32;
++--------+------+------------+
+| name   | age  | mobile_no  |
++--------+------+------------+
+| Misbah |   35 | 9898357982 |
++--------+------+------------+
+1 row in set (0.00 sec)
+
+mysql> select name,city,age from customer where city="surat" and age=18;
++-------+-------+------+
+| name  | city  | age  |
++-------+-------+------+
+| Khadi | Surat |   18 |
+| AK    | Surat |   18 |
++-------+-------+------+
+2 rows in set (0.00 sec)
+
+mysql> select name,city,age from customer where city="surat" or age=18;
++--------+-------+------+
+| name   | city  | age  |
++--------+-------+------+
+| Khadi  | Surat |   18 |
+| AK     | Surat |   18 |
+| Misbah | Surat |   35 |
+| Sofia  | Surat |   31 |
++--------+-------+------+
+4 rows in set (0.00 sec)
+
+mysql> select name,mobile_no from customer where name like 'A%';
++------+------------+
+| name | mobile_no  |
++------+------------+
+| AK   | 9099740533 |
++------+------------+
+1 row in set (0.00 sec)
+
+mysql> select name,mobile_no from customer where name like '%A';
++-------+------------+
+| name  | mobile_no  |
++-------+------------+
+| Sofia | 9898765234 |
++-------+------------+
+1 row in set (0.00 sec)
+
+mysql> select name,mobile_no from customer where name like '__A%';
++-------+------------+
+| name  | mobile_no  |
++-------+------------+
+| Khadi | 9106639533 |
++-------+------------+
+1 row in set (0.00 sec)
+
+mysql> select name,mobile_no from customer where name like '_i%';
++--------+------------+
+| name   | mobile_no  |
++--------+------------+
+| Misbah | 9898357982 |
++--------+------------+
+1 row in set (0.00 sec)
+mysql> select name,mobile_no from customer where name like 'k_a%';
++-------+------------+
+| name  | mobile_no  |
++-------+------------+
+| Khadi | 9106639533 |
++-------+------------+
+1 row in set (0.00 sec)
+
+
+mysql> select * from customer order by age;
++----+--------+------------+------+----------+
+| id | name   | Mobile_No  | age  | city     |
++----+--------+------------+------+----------+
+|  1 | Khadi  | 9106639533 |   18 | Surat    |
+|  2 | AK     | 9099740533 |   18 | Surat    |
+|  5 | Sofia  | 9898765234 |   31 | Surat    |
+|  3 | Misbah | 9898357982 |   35 | vadodara |
++----+--------+------------+------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by age desc;
++----+--------+------------+------+----------+
+| id | name   | Mobile_No  | age  | city     |
++----+--------+------------+------+----------+
+|  3 | Misbah | 9898357982 |   35 | vadodara |
+|  5 | Sofia  | 9898765234 |   31 | Surat    |
+|  1 | Khadi  | 9106639533 |   18 | Surat    |
+|  2 | AK     | 9099740533 |   18 | Surat    |
++----+--------+------------+------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select distinct city from customer;
++----------+
+| city     |
++----------+
+| Surat    |
+| vadodara |
++----------+
+2 rows in set (0.01 sec)
+
+
+mysql> select *from customer limit 3;
++----+--------+------------+------+----------+
+| id | name   | Mobile_No  | age  | city     |
++----+--------+------------+------+----------+
+|  1 | Khadi  | 9106639533 |   18 | Surat    |
+|  2 | AK     | 9099740533 |   18 | Surat    |
+|  3 | Misbah | 9898357982 |   35 | vadodara |
++----+--------+------------+------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select *from customer limit 3 offset 1;
++----+--------+------------+------+----------+
+| id | name   | Mobile_No  | age  | city     |
++----+--------+------------+------+----------+
+|  2 | AK     | 9099740533 |   18 | Surat    |
+|  3 | Misbah | 9898357982 |   35 | vadodara |
+|  5 | Sofia  | 9898765234 |   31 | Surat    |
++----+--------+------------+------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customer where mobile_no is null;
+Empty set (0.00 sec)
+
+mysql> select * from customer where mobile_no is not null;
++----+--------+------------+------+----------+
+| id | name   | Mobile_No  | age  | city     |
++----+--------+------------+------+----------+
+|  2 | AK     | 9099740533 |   18 | Surat    |
+|  1 | Khadi  | 9106639533 |   18 | Surat    |
+|  3 | Misbah | 9898357982 |   35 | vadodara |
+|  5 | Sofia  | 9898765234 |   31 | Surat    |
++----+--------+------------+------+----------+
+4 rows in set (0.00 sec)
+
+
+
+mysql> select count(id)as Total_No_Customer from customer;
++-------------------+
+| Total_No_Customer |
++-------------------+
+|                 4 |
++-------------------+
+1 row in set (0.01 sec)
+
+mysql> select sum(amount) as Total_Amount from Payment;
++--------------+
+| Total_Amount |
++--------------+
+|         5096 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select Avg(amount) as Avg_Amount from Payment;
++------------+
+| Avg_Amount |
++------------+
+|  1274.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select Min(amount) as Min_Amount from Payment;
++------------+
+| Min_Amount |
++------------+
+|        599 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select Max(amount) as Max_Amount from Payment;
++------------+
+| Max_Amount |
++------------+
+|       1999 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select *from customer where city in('Surat','vadodara');
++----+--------+------------+------+----------+
+| id | name   | Mobile_No  | age  | city     |
++----+--------+------------+------+----------+
+|  1 | Khadi  | 9106639533 |   18 | Surat    |
+|  2 | AK     | 9099740533 |   18 | Surat    |
+|  3 | Misbah | 9898357982 |   35 | vadodara |
+|  5 | Sofia  | 9898765234 |   31 | Surat    |
++----+--------+------------+------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select *from customer where city not in('vadodara');
++----+-------+------------+------+-------+
+| id | name  | Mobile_No  | age  | city  |
++----+-------+------------+------+-------+
+|  1 | Khadi | 9106639533 |   18 | Surat |
+|  2 | AK    | 9099740533 |   18 | Surat |
+|  5 | Sofia | 9898765234 |   31 | Surat |
++----+-------+------------+------+-------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+JOINS
+
+mysql> select name,mobile_no,amount,mode from customer inner join payment on customer.id=payment.id;
++--------+------------+--------+--------+
+| name   | mobile_no  | amount | mode   |
++--------+------------+--------+--------+
+| Khadi  | 9106639533 |    999 | Online |
+| AK     | 9099740533 |   1499 | Cash   |
+| Misbah | 9898357982 |   1999 | Online |
+| Sofia  | 9898765234 |    599 | Cash   |
++--------+------------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select customer.id,name,mobile_no,amount,mode,pay_date from customer left join payment on customer.id=payment.id;
