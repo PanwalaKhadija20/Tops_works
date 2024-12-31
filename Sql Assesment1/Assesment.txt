@@ -1,0 +1,150 @@
+--------------------------------------------ASSESMENT----------------------------------------
+
+
+mysql> create database Assesment1;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| assesment          |
+| assesment1         |
+| demo               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use assesment1;
+Database changed
+mysql> create table Product(Pro_Id int,Pro_Name varchar(20),Pro_Price int,Pro_Code int);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> describe product;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Pro_Id    | int         | YES  |     | NULL    |       |
+| Pro_Name  | varchar(20) | YES  |     | NULL    |       |
+| Pro_Price | int         | YES  |     | NULL    |       |
+| Pro_Code  | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql> insert into product values((101,"MotherBoard",3200,15),(102,"KeyBoard",450,16),(103,"ZipDrive",250,14),
+(104,"Speaker",550,16),(105,"Monitor",5000,11),(106,"DVD Drive",900,12),(107,"CD Drive",800,12),(108,"Printer",2600,13),
+(109,"RefillCartridge",350,13),(110,"Mouse",250,12));
+
+
+mysql> select * from product;
++--------+-----------------+-----------+----------+
+| Pro_Id | Pro_Name        | Pro_Price | Pro_Code |
++--------+-----------------+-----------+----------+
+|    101 | MotherBoard     |      3200 |       15 |
+|    102 | KeyBoard        |       450 |       16 |
+|    103 | ZipDrive        |       250 |       14 |
+|    104 | Speaker         |       550 |       16 |
+|    105 | Monitor         |      5000 |       11 |
+|    106 | DVD Drive       |       900 |       12 |
+|    107 | CD Drive        |       800 |       12 |
+|    108 | Printer         |      2600 |       13 |
+|    109 | RefillCartridge |       350 |       13 |
+|    110 | Mouse           |       250 |       12 |
++--------+-----------------+-----------+----------+
+10 rows in set (0.01 sec)
+
+-----------------------------------------------------------QUERIES------------------------------------------------------------------
+
+
+mysql> select * from product where Pro_Price>=250;
++--------+-----------------+-----------+----------+
+| Pro_Id | Pro_Name        | Pro_Price | Pro_Code |
++--------+-----------------+-----------+----------+
+|    101 | MotherBoard     |      3200 |       15 |
+|    102 | KeyBoard        |       450 |       16 |
+|    103 | ZipDrive        |       250 |       14 |
+|    104 | Speaker         |       550 |       16 |
+|    105 | Monitor         |      5000 |       11 |
+|    106 | DVD Drive       |       900 |       12 |
+|    107 | CD Drive        |       800 |       12 |
+|    108 | Printer         |      2600 |       13 |
+|    109 | RefillCartridge |       350 |       13 |
+|    110 | Mouse           |       250 |       12 |
++--------+-----------------+-----------+----------+
+10 rows in set (0.01 sec)
+
+
+mysql> select Pro_Price from product order by Pro_price desc;
++-----------+
+| Pro_Price |
++-----------+
+|      5000 |
+|      3200 |
+|      2600 |
+|       900 |
+|       800 |
+|       550 |
+|       450 |
+|       350 |
+|       250 |
+|       250 |
++-----------+
+10 rows in set (0.00 sec)
+
+mysql> select Pro_Name from product order by Pro_Name;
++-----------------+
+| Pro_Name        |
++-----------------+
+| CD Drive        |
+| DVD Drive       |
+| KeyBoard        |
+| Monitor         |
+| MotherBoard     |
+| Mouse           |
+| Printer         |
+| RefillCartridge |
+| Speaker         |
+| ZipDrive        |
++-----------------+
+10 rows in set (0.01 sec)
+
+
+
+mysql> select Min(Pro_Price) as Min_Price from Product;
++-----------+
+| Min_Price |
++-----------+
+|       250 |
++-----------+
+1 row in set (0.01 sec)s
+
+
+mysql>  select Avg(Pro_price) as Avg_Price from Product;
++-----------+
+| Avg_Price |
++-----------+
+| 1435.0000 |
++-----------+
+1 row in set (0.01 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
