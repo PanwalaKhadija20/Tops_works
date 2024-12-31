@@ -1,0 +1,126 @@
+ASSESMENT
+
+mysql> create Database Assesment;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| assesment          |
+| demo               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use assesment;
+Database changed
+mysql> create table Country(Id int primary key,Country_Name varchar(20),Country_Name_Eng varchar(20),Country_Code varchar(20));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> describe country;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| Id               | int         | NO   | PRI | NULL    |       |
+| Country_Name     | varchar(20) | YES  |     | NULL    |       |
+| Country_Name_Eng | varchar(20) | YES  |     | NULL    |       |
+| Country_Code     | varchar(20) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into country values(1,"Deutschland","Germany","DEU");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> alter table country modify country_name varchar(40);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table country modify country_name_eng varchar(40);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into country values(2,"Srbija","Serbia","SRB"),(3,"Hrvatska","Croatia","HRV"),(4,"United States Of America","United States Of America","USA"),(5,"Polska","Poland","POL"),(6,"Espana","Spain","ESP"),(7,"Rossiya","Russia","RUS");
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select *from country;
++----+--------------------------+--------------------------+--------------+
+| Id | country_name             | country_name_eng         | Country_Code |
++----+--------------------------+--------------------------+--------------+
+|  1 | Deutschland              | Germany                  | DEU          |
+|  2 | Srbija                   | Serbia                   | SRB          |
+|  3 | Hrvatska                 | Croatia                  | HRV          |
+|  4 | United States Of America | United States Of America | USA          |
+|  5 | Polska                   | Poland                   | POL          |
+|  6 | Espana                   | Spain                    | ESP          |
+|  7 | Rossiya                  | Russia                   | RUS          |
++----+--------------------------+--------------------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> create table City(City_Id int primary key,City_Name varchar(20),Latitide decimal(9,7),longitude decimal(9,7),Country_Id int,foreign key (Country_Id) references country(Id));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> describe city;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| City_Id    | int          | NO   | PRI | NULL    |       |
+| City_Name  | varchar(20)  | YES  |     | NULL    |       |
+| Latitide   | decimal(9,7) | YES  |     | NULL    |       |
+| longitude  | decimal(9,7) | YES  |     | NULL    |       |
+| Country_Id | int          | YES  | MUL | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into city values(1,"Berlin",52.520008,13.404954,1),(2,"Belgrade",44.787197,20.457273,2),(3,"Zagreb",45.815399,15.966568,3),(4,"New York",40.730610,-73.935242,4),(5,"Los Angeles",34.052235,-98.243683,4),(6,"Warsaw",52.237049,21.017532,5);
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from city;
++---------+-------------+------------+-------------+------------+
+| City_Id | City_Name   | Latitide   | longitude   | Country_Id |
++---------+-------------+------------+-------------+------------+
+|       1 | Berlin      | 52.5200080 |  13.4049540 |          1 |
+|       2 | Belgrade    | 44.7871970 |  20.4572730 |          2 |
+|       3 | Zagreb      | 45.8153990 |  15.9665680 |          3 |
+|       4 | New York    | 40.7306100 | -73.9352420 |          4 |
+|       5 | Los Angeles | 34.0522350 | -98.2436830 |          4 |
+|       6 | Warsaw      | 52.2370490 |  21.0175320 |          5 |
++---------+-------------+------------+-------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> create table customer(Id int,Customer_Name varchar(20),City_Id int,foreign key (City_Id) references city(City_Id),Customer_Address varchar(40),Next_Call_Date date,TS_Inserted datetime);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> describe customer;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| Id               | int         | YES  |     | NULL    |       |
+| Customer_Name    | varchar(20) | YES  |     | NULL    |       |
+| City_Id          | int         | YES  | MUL | NULL    |       |
+| Customer_Address | varchar(40) | YES  |     | NULL    |       |
+| Next_Call_Date   | date        | YES  |     | NULL    |       |
+| TS_Inserted      | datetime    | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into customer values(1,"Jewelry Store",4,"Long Street 120","2020/01/21","2020/01/09 14:01:20.000"),(2,"Bakery",1,"Kurfurstendamm 25","2020/02/21","2020/01/09 17:52:15.000"),(3,"Cafe",1,"Tauentzienstrabe 44","2020/01/21","2020/01/10 08:02:49.000"),(4,"Restaurant",3,"Ulica Lipa 15","2020/01/21","2020/01/10 09:20:21.000");
+Query OK, 4 rows affected, 8 warnings (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 8
+
+mysql> select *from customer;
++------+---------------+---------+---------------------+----------------+---------------------+
+| Id   | Customer_Name | City_Id | Customer_Address    | Next_Call_Date | TS_Inserted         |
++------+---------------+---------+---------------------+----------------+---------------------+
+|    1 | Jewelry Store |       4 | Long Street 120     | 2020-01-21     | 2020-01-09 14:01:20 |
+|    2 | Bakery        |       1 | Kurfurstendamm 25   | 2020-02-21     | 2020-01-09 17:52:15 |
+|    3 | Cafe          |       1 | Tauentzienstrabe 44 | 2020-01-21     | 2020-01-10 08:02:49 |
+|    4 | Restaurant    |       3 | Ulica Lipa 15       | 2020-01-21     | 2020-01-10 09:20:21 |
++------+---------------+---------+---------------------+----------------+---------------------+
+4 rows in set (0.00 sec)
+
