@@ -1,0 +1,14 @@
+What is OOP? List OOP concepts?
+
+Object-Oriented Programming (OOP) is a programming paradigm 
+that organizes programs around data and objects instead of logic and functions.
+
+->Encapsulation
+->Polymorphism
+->Inheritance
+->Abstraction
+->Objects
+->Methods
+->Message passing
+->Classes and objects
+

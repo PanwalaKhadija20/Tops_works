@@ -1,0 +1,11 @@
+What is the difference between OOP and POP?
+
+The main differences between Object-Oriented Programming (OOP) and Procedure-Oriented Programming (POP) are: 
+OOP focuses on data security, while POP focuses on completing a task. 
+OOP's elements are objects, while POP's are functions.
+OOP has access specifiers like "Public", "Private", and "Protected", while POP does not. 
+OOP supports inheritance, while POP does not. 
+OOP supports polymorphism, while POP does not. 
+OOP supports code reusability, while POP does not. 
+OOP provides data hiding, while POP does not. 
+OOP supports overloading, while POP does not. 
